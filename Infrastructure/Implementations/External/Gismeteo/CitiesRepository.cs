@@ -1,12 +1,12 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces.External;
 
-namespace Infrastructure.Implementations.External;
+namespace Infrastructure.Implementations.External.Gismeteo;
 
-internal class CityRepository(IHttpClientFactory factory)
-    : ICityRepository
+internal class CitiesRepository(IHttpClientFactory factory)
+    : ICitiesRepository
 {
-    private static string GetUrl(string name) => string.Format("https://services.gismeteo.ru/inform-service/inf_chrome/cities/?startsWith={0}&lang=ru", name);
+    private static string GetUrl(string name) => string.Format(Consts.CityUrl, name);
 
     public async Task<City> Get(string cityName, CancellationToken cancellationToken = default)
     {
@@ -20,7 +20,13 @@ internal class CityRepository(IHttpClientFactory factory)
             var item = cityResponse.Items.FirstOrDefault();
             if (item is null)
                 return null;
-            return new City { Id = item.Id, Name = item.Name, Latitude = item.Latitude, Longitude = item.Longitude };
+            return new City 
+            { 
+                Id = item.Id, 
+                Name = item.Name, 
+                Latitude = item.Latitude, 
+                Longitude = item.Longitude 
+            };
         }
         throw new HttpRequestException("Ошибка получения города", null, response.StatusCode);
     }

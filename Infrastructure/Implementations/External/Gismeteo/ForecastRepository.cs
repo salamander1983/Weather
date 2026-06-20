@@ -1,12 +1,12 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces.External;
 
-namespace Infrastructure.Implementations.External;
+namespace Infrastructure.Implementations.External.Gismeteo;
 
-internal class WeatherRepository(IHttpClientFactory factory)
-    : IWeatherRepository
+internal class ForecastRepository(IHttpClientFactory factory)
+    : IForecastRepository
 {
-    private static string GetUrl(int id) => string.Format("https://services.gismeteo.ru/inform-service/inf_chrome/forecast/?city={0}&lang=ru", id);
+    private static string GetUrl(int id) => string.Format(Consts.ForecastUrl, id);
 
     public async Task<Weather> Get(int cityId, CancellationToken cancellationToken = default)
     {
@@ -22,9 +22,18 @@ internal class WeatherRepository(IHttpClientFactory factory)
             if (values is null)
                 return null;
             var timestamp = fact.Timestamp;
-            return new Weather { CityId = cityId, Timestamp = timestamp, 
-                                 Temperature = values.Temperature, Icon = values.Icon, Description = values.Description,
-                                 Wind = values.Wind, Water = values.Water, Humidity = values.Humidity, Pressure = values.Pressure };
+            return new Weather 
+            { 
+                CityId = cityId, 
+                Timestamp = timestamp, 
+                Temperature = values.Temperature, 
+                Icon = values.Icon, 
+                Description = values.Description,
+                Wind = values.Wind, 
+                Water = values.Water, 
+                Humidity = values.Humidity, 
+                Pressure = values.Pressure 
+            };
         }
         throw new HttpRequestException("Ошибка получения погоды", null, response.StatusCode);
     }

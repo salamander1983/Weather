@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces.External;
 
-using Infrastructure.Implementations.External;
+using Infrastructure.Implementations.External.Gismeteo;
 
 namespace Infrastructure;
 
@@ -12,8 +12,8 @@ public static class DI
         {
             return services
                 .AddHttpClient()
-                .AddSingleton<ICityRepository, CityRepository>()
-                .AddSingleton<IWeatherRepository, WeatherRepository>();
+                .AddSingleton<ICitiesRepository, CitiesRepository>()
+                .AddSingleton<IForecastRepository, ForecastRepository>();
         }
     }
 }

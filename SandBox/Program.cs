@@ -8,12 +8,12 @@ builder.Services.RegisterInfrastructure();
 
 var host = builder.Build();
 
-var externalCity = host.Services.GetRequiredService<ICityRepository>();
+var externalCity = host.Services.GetRequiredService<ICitiesRepository>();
 var city = await externalCity.Get("Москва");
 Console.WriteLine($"{city.Id} {city.Name}");
 
-var externalWeather = host.Services.GetRequiredService<IWeatherRepository>();
-var weather = await externalWeather.Get(city.Id);
-Console.WriteLine($"{weather.Temperature} {weather.Description}");
+var externalWeather = host.Services.GetRequiredService<IForecastRepository>();
+var forecast = await externalWeather.Get(city.Id);
+Console.WriteLine($"{forecast.Temperature} {forecast.Description}");
 
 host.Run();

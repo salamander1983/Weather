@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.External;
 
-public interface IWeatherRepository
+public interface IForecastRepository
 {
     Task<Weather> Get(int cityId, CancellationToken cancellationToken = default);
 }

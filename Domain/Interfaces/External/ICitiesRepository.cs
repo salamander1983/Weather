@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.External;
 
-public interface ICityRepository
+public interface ICitiesRepository
 {
     Task<City> Get(string name, CancellationToken cancellationToken = default);
 }
