@@ -80,8 +80,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("temperature");
 
-                    b.Property<DateTimeOffset>("Timestamp")
-                        .HasColumnType("timestamptz")
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("timestamp");
 
                     b.Property<double>("Water")

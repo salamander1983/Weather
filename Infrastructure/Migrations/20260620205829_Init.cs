@@ -33,7 +33,7 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     city_id = table.Column<int>(type: "integer", nullable: false),
-                    timestamp = table.Column<DateTimeOffset>(type: "timestamptz", nullable: false),
+                    timestamp = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     temperature = table.Column<double>(type: "double precision", nullable: false),
                     icon = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false),

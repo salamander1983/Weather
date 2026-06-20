@@ -2,7 +2,7 @@
 
 public class Weather
 {
-    public DateTimeOffset Timestamp { get; set; }
+    public DateTime Timestamp { get; set; }
 
     public double Temperature { get; set; }
     public string Icon { get; set; }

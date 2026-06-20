@@ -16,7 +16,7 @@ internal class GetWeatherQueryHandler(IWeatherRepository weatherRepository)
         return new WeatherDto
         {
             Name = weather.City?.Name,
-            Timestamp = weather.Timestamp.ToLocalTime().DateTime,
+            Timestamp = weather.Timestamp,
             Temperature = weather.Temperature,
             Icon = weather.Icon,
             Description = weather.Description,
