@@ -3,5 +3,6 @@
   <Project Path="Domain/Domain.csproj" />
   <Project Path="Infrastructure/Infrastructure.csproj" />
   <Project Path="SandBox/SandBox.csproj" />
+  <Project Path="Scheduler/Scheduler.csproj" />
   <Project Path="SvgToPng/SvgToPng.csproj" />
 </Solution>
