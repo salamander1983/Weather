@@ -25,7 +25,7 @@ internal class ForecastRepository(IHttpClientFactory factory)
             return new Weather 
             { 
                 CityId = cityId, 
-                Timestamp = timestamp, 
+                Timestamp = timestamp.ToUniversalTime(), 
                 Temperature = values.Temperature, 
                 Icon = values.Icon, 
                 Description = values.Description,

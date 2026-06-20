@@ -13,6 +13,9 @@ internal class UpdateWeatherCommandHandler(IWeatherRepository weatherRepository,
     {
         var weather = await forecastRepository.Get(request.CityId, cancellationToken)
             ?? throw new NotFoundException($"Для города с идентификатором {request.CityId} информация о погоде не найдена");
-        await weatherRepository.Upsert(weather, cancellationToken);
+        
+        var existed = await weatherRepository.Get(request.CityId, cancellationToken);
+        if (existed is null || existed.Timestamp != weather.Timestamp)
+            await weatherRepository.Upsert(weather, cancellationToken);
     }
 }
