@@ -8,4 +8,6 @@ public class City
     public double Longitude { get; set; }
 
     public Weather Weather { get; set; }
+
+    public List<WeatherHistory> History { get; set; } = [];
 }

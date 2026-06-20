@@ -11,7 +11,7 @@ internal class WeatherRepository(IDbContextFactory<WeatherContext> factory)
     public async Task<Weather> Get(int cityId, CancellationToken cancellationToken = default)
     {
         using var context = await factory.CreateDbContextAsync(cancellationToken);
-        return await context.Wheaters
+        return await context.Weathers
                         .Include(x => x.City)
                         .FirstOrDefaultAsync(x => x.CityId == cityId, cancellationToken);
     }
@@ -19,14 +19,21 @@ internal class WeatherRepository(IDbContextFactory<WeatherContext> factory)
     public async Task Create(Weather weather, CancellationToken cancellationToken = default)
     {
         using var context = await factory.CreateDbContextAsync(cancellationToken);
-        context.Wheaters.Add(weather);
+        context.Weathers.Add(weather);
         await context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task Update(Weather weather, CancellationToken cancellationToken = default)
     {
         using var context = await factory.CreateDbContextAsync(cancellationToken);
-        context.Update(weather);
+        context.Weathers.Update(weather);
+        await context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task History(WeatherHistory weatherHistory, CancellationToken cancellationToken = default)
+    {
+        using var context = await factory.CreateDbContextAsync(cancellationToken);
+        context.WeatherHistories.Add(weatherHistory);
         await context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -7,7 +7,9 @@ namespace Infrastructure.DbContexts;
 internal class WeatherContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<City> Cities { get; set; }
-    public DbSet<Weather> Wheaters { get; set; }
+    public DbSet<Weather> Weathers { get; set; }
+    public DbSet<WeatherHistory> WeatherHistories { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -20,6 +22,7 @@ internal class WeatherContext(DbContextOptions options) : DbContext(options)
     {
         modelBuilder.ApplyConfiguration(new CityConfiguration());
         modelBuilder.ApplyConfiguration(new WeatherConfiguration());
+        modelBuilder.ApplyConfiguration(new WeatherHistoryConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

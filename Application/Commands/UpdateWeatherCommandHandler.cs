@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
 
+using Domain.Entities;
 using Domain.Interfaces.External;
 using Domain.Interfaces.Repositories;
 
@@ -16,8 +17,19 @@ internal class UpdateWeatherCommandHandler(IWeatherRepository weatherRepository,
         
         var existed = await weatherRepository.Get(request.CityId, cancellationToken);
         if (existed is null)
+        {
             await weatherRepository.Create(weather, cancellationToken);
+        }
         else if (existed.Timestamp != weather.Timestamp)
+        {
+            var history = new WeatherHistory
+            {
+                Timestamp = existed.Timestamp,
+                CityId = existed.CityId,
+                Data = JsonSerializer.Serialize(existed),
+            };
+            await weatherRepository.History(history, cancellationToken);
             await weatherRepository.Update(weather, cancellationToken);
+        }
     }
 }
