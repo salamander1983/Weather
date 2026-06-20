@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="Domain/Domain.csproj" />
   <Project Path="SvgToPng/SvgToPng.csproj" />
 </Solution>
