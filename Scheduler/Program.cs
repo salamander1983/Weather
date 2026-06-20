@@ -4,7 +4,7 @@ using Scheduler;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.RegisterInfrastructure();
+builder.Services.RegisterInfrastructure(builder.Configuration.GetConnectionString("DB"));
 builder.Services.RegisterApplication();
 builder.Services.AddHostedService<CityWeatherWorker>();
 

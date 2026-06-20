@@ -4,7 +4,7 @@ using Infrastructure;
 
 var builder = Host.CreateApplicationBuilder();
 
-builder.Services.RegisterInfrastructure();
+builder.Services.RegisterInfrastructure(builder.Configuration.GetConnectionString("DB"));
 
 var host = builder.Build();
 
