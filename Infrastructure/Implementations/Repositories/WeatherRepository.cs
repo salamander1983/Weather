@@ -11,7 +11,9 @@ internal class WeatherRepository(IDbContextFactory<WeatherContext> factory)
     public async Task<Weather> Get(int cityId, CancellationToken cancellationToken = default)
     {
         using var context = await factory.CreateDbContextAsync(cancellationToken);
-        return await context.Wheaters.FirstOrDefaultAsync(x => x.CityId == cityId, cancellationToken);
+        return await context.Wheaters
+                        .Include(x => x.City)
+                        .FirstOrDefaultAsync(x => x.CityId == cityId, cancellationToken);
     }
 
     public async Task Upsert(Weather weather, CancellationToken cancellationToken = default)
