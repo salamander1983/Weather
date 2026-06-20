@@ -1,6 +1,8 @@
-﻿namespace Domain.Interfaces.External;
+﻿using Domain.Entities;
+
+namespace Domain.Interfaces.External;
 
 public interface ICityRepository
 {
-    Task<CityResponse> Get(CityRequest request, CancellationToken cancellationToken = default);
+    Task<City> Get(string name, CancellationToken cancellationToken = default);
 }

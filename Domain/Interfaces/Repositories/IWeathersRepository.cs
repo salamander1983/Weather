@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.Repositories;
 
-public interface IWeatherRepository
+public interface IWeathersRepository
 {
     Task Upsert(Weather weather, CancellationToken cancellationToken = default);
 }
