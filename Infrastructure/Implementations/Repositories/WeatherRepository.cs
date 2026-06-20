@@ -30,10 +30,18 @@ internal class WeatherRepository(IDbContextFactory<WeatherContext> factory)
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task History(WeatherHistory weatherHistory, CancellationToken cancellationToken = default)
+    public async Task CreateHistory(WeatherHistory weatherHistory, CancellationToken cancellationToken = default)
     {
         using var context = await factory.CreateDbContextAsync(cancellationToken);
         context.WeatherHistories.Add(weatherHistory);
         await context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<WeatherHistory>> GetHistory(int cityId, CancellationToken cancellationToken = default)
+    {
+        using var context = await factory.CreateDbContextAsync(cancellationToken);
+        return await context.WeatherHistories
+                        .Where(x => x.CityId == cityId)
+                        .ToListAsync(cancellationToken);
     }
 }

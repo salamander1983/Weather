@@ -15,6 +15,12 @@ internal class CityRepository(IDbContextFactory<WeatherContext> factory)
         await context.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task<City> Get(int cityId, CancellationToken cancellationToken = default)
+    {
+        using var context = await factory.CreateDbContextAsync(cancellationToken);
+        return await context.Cities.FirstOrDefaultAsync(x => x.Id == cityId, cancellationToken);
+    }
+
     public async Task<IEnumerable<City>> Search(string name, CancellationToken cancellationToken = default)
     {
         using var context = await factory.CreateDbContextAsync(cancellationToken);

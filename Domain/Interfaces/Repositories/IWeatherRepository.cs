@@ -6,6 +6,7 @@ public interface IWeatherRepository
 {
     Task Create(Weather weather, CancellationToken cancellationToken = default);
     Task Update(Weather weather, CancellationToken cancellationToken = default);
-    Task History(WeatherHistory weather, CancellationToken cancellationToken= default);
+    Task CreateHistory(WeatherHistory weather, CancellationToken cancellationToken= default);
     Task<Weather> Get(int cityId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<WeatherHistory>> GetHistory(int cityId, CancellationToken cancellationToken = default);
 }

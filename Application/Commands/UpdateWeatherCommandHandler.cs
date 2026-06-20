@@ -29,7 +29,7 @@ internal class UpdateWeatherCommandHandler(IWeatherRepository weatherRepository,
                 CityId = existed.CityId,
                 Data = JsonSerializer.Serialize(existed),
             };
-            await weatherRepository.History(history, cancellationToken);
+            await weatherRepository.CreateHistory(history, cancellationToken);
             await weatherRepository.Update(weather, cancellationToken);
         }
     }
