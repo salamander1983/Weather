@@ -1,19 +1,21 @@
-﻿using Domain.Interfaces.External;
+﻿using Application;
+using Application.Commands;
+using Application.Queries;
 
 using Infrastructure;
 
 var builder = Host.CreateApplicationBuilder();
 
 builder.Services.RegisterInfrastructure(builder.Configuration.GetConnectionString("DB"));
+builder.Services.RegisterApplication();
 
 var host = builder.Build();
 
-var externalCity = host.Services.GetRequiredService<ICitiesRepository>();
-var city = await externalCity.Get("Москва");
-Console.WriteLine($"{city.Id} {city.Name}");
-
-var externalWeather = host.Services.GetRequiredService<IForecastRepository>();
-var forecast = await externalWeather.Get(city.Id);
-Console.WriteLine($"{forecast.Temperature} {forecast.Description}");
+var cityName = "Москва";
+var mediator = host.Services.GetRequiredService<IMediator>();
+var cityExisted = await mediator.Send(new GetCitiesQuery(cityName));
+foreach (var cityExist in cityExisted)
+    Console.WriteLine($"{cityExist.Id} {cityExist.Name}");
+await mediator.Send(new CreateCityCommand(cityName));
 
 host.Run();

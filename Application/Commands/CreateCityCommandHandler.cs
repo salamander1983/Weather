@@ -19,7 +19,7 @@ internal class CreateCityCommandHandler(ICitiesRepository externalCitiesReposito
         {
             var city = internalCities.FirstOrDefault(x => x.Name.ToLower().Trim() == request.Name.ToLower().Trim());
             if (city is not null)
-                throw new Exceptions.NotFoundException($"Город {city.Name} уже существует с идентификатором {city.Id}");
+                throw new NotFoundException($"Город {city.Name} уже существует с идентификатором {city.Id}");
         }
 
         await internalCityRepository.Create(externalCity, cancellationToken);
