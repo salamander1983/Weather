@@ -116,7 +116,7 @@ namespace Infrastructure.Migrations
                         .HasColumnName("data");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("timestamp");
 
                     b.HasKey("Id")

@@ -22,6 +22,7 @@ internal class UpdateWeatherCommandHandler(IWeatherRepository weatherRepository,
         }
         else if (existed.Timestamp != weather.Timestamp)
         {
+            existed.City = null;
             var history = new WeatherHistory
             {
                 Timestamp = existed.Timestamp,

@@ -19,6 +19,10 @@ internal class WeatherHistoryConfiguration : IEntityTypeConfiguration<WeatherHis
             .HasColumnType("jsonb");
 
         builder
+            .Property(x => x.Timestamp)
+            .HasColumnType("timestamp without time zone");
+
+        builder
             .HasOne(x => x.City)
             .WithMany(x => x.History)
             .HasForeignKey(x => x.CityId)

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(WeatherContext))]
-    [Migration("20260620211426_History")]
+    [Migration("20260620213655_History")]
     partial class History
     {
         /// <inheritdoc />
@@ -119,7 +119,7 @@ namespace Infrastructure.Migrations
                         .HasColumnName("data");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("timestamp");
 
                     b.HasKey("Id")
