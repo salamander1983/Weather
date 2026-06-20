@@ -13,7 +13,7 @@ public class WeatherController(IMediator mediator)
     public async Task<WeatherDto> Get([FromQuery] GetWeatherQuery query, CancellationToken cancellationToken) =>
         await mediator.Send(query, cancellationToken);
 
-    [HttpPut("{cityId:int}/upsert")]
+    [HttpPut("{cityId:int}/update")]
     public async Task Upsert([FromRoute] int cityId, CancellationToken cancellationToken) =>
         await mediator.Send(new UpdateWeatherCommand(cityId), cancellationToken);
 }

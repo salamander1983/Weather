@@ -16,14 +16,17 @@ internal class WeatherRepository(IDbContextFactory<WeatherContext> factory)
                         .FirstOrDefaultAsync(x => x.CityId == cityId, cancellationToken);
     }
 
-    public async Task Upsert(Weather weather, CancellationToken cancellationToken = default)
+    public async Task Create(Weather weather, CancellationToken cancellationToken = default)
     {
         using var context = await factory.CreateDbContextAsync(cancellationToken);
-        var existed = await context.Wheaters.FirstOrDefaultAsync(x => x.CityId == weather.CityId, cancellationToken);
-        if (existed is null)
-            context.Wheaters.Add(weather);
-        else
-            context.Wheaters.Entry(existed).CurrentValues.SetValues(weather);
+        context.Wheaters.Add(weather);
+        await context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task Update(Weather weather, CancellationToken cancellationToken = default)
+    {
+        using var context = await factory.CreateDbContextAsync(cancellationToken);
+        context.Update(weather);
         await context.SaveChangesAsync(cancellationToken);
     }
 }
