@@ -1,1 +1,3 @@
-<Solution />
+<Solution>
+  <Project Path="SvgToPng/SvgToPng.csproj" />
+</Solution>
