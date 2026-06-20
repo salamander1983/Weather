@@ -81,7 +81,7 @@ namespace Infrastructure.Migrations
                         .HasColumnName("temperature");
 
                     b.Property<DateTimeOffset>("Timestamp")
-                        .HasColumnType("TIMESTAMPTZ")
+                        .HasColumnType("timestamptz")
                         .HasColumnName("timestamp");
 
                     b.Property<double>("Water")

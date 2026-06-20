@@ -24,7 +24,7 @@ internal class WeatherConfiguration : IEntityTypeConfiguration<Weather>
 
         builder
             .Property(x => x.Timestamp)
-            .HasColumnType("TIMESTAMPTZ");
+            .HasColumnType("timestamptz");
 
         builder
             .HasOne(x => x.City)

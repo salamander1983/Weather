@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(WeatherContext))]
-    [Migration("20260620171128_Init")]
+    [Migration("20260620195352_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -83,8 +83,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("temperature");
 
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateTimeOffset>("Timestamp")
+                        .HasColumnType("timestamptz")
                         .HasColumnName("timestamp");
 
                     b.Property<double>("Water")
