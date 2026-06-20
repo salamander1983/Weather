@@ -23,6 +23,10 @@ internal class WeatherConfiguration : IEntityTypeConfiguration<Weather>
             .IsRequired();
 
         builder
+            .Property(x => x.Timestamp)
+            .HasColumnType("TIMESTAMPTZ");
+
+        builder
             .HasOne(x => x.City)
             .WithOne(x => x.Weather)
             .HasForeignKey<Weather>(x => x.CityId)
