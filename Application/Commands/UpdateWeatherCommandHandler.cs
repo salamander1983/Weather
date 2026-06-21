@@ -10,6 +10,8 @@ internal class UpdateWeatherCommandHandler(IWeatherRepository weatherRepository,
                                            IForecastRepository forecastRepository)
     : IRequestHandler<UpdateWeatherCommand>
 {
+    private readonly JsonSerializerOptions _jsonOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+
     public async Task Handle(UpdateWeatherCommand request, CancellationToken cancellationToken)
     {
         var weather = await forecastRepository.Get(request.CityId, cancellationToken)
@@ -27,7 +29,7 @@ internal class UpdateWeatherCommandHandler(IWeatherRepository weatherRepository,
             {
                 Timestamp = existed.Timestamp,
                 CityId = existed.CityId,
-                Data = JsonSerializer.Serialize(existed),
+                Data = JsonSerializer.Serialize(existed, _jsonOptions),
             };
             await weatherRepository.CreateHistory(history, cancellationToken);
             await weatherRepository.Update(weather, cancellationToken);
