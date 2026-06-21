@@ -1,21 +1,21 @@
-﻿using Application;
-using Application.Commands;
-using Application.Queries;
-
-using Infrastructure;
+﻿using ApiClient;
 
 var builder = Host.CreateApplicationBuilder();
 
-builder.Services.RegisterInfrastructure(builder.Configuration.GetConnectionString("DB"));
-builder.Services.RegisterApplication();
+builder.Services.AddHttpClient<Weather>();
 
 var host = builder.Build();
 
-var cityName = "Москва";
-var mediator = host.Services.GetRequiredService<IMediator>();
-var cityExisted = await mediator.Send(new GetCitiesQuery(cityName));
-foreach (var cityExist in cityExisted)
-    Console.WriteLine($"{cityExist.Id} {cityExist.Name}");
-await mediator.Send(new CreateCityCommand(cityName));
+var weather = host.Services.GetService<Weather>();
+weather.BaseUrl = builder.Configuration["Api"];
+
+var cities = await weather.CityAllAsync(string.Empty);
+foreach (var city in cities)
+{
+    Console.WriteLine($"{city.Id} {city.Name}");
+    var histories = await weather.HistoryAsync(city.Id);
+    foreach (var history in histories.History)
+        Console.WriteLine($"{history.Timestamp} {history.Temperature}");
+}
 
 host.Run();
