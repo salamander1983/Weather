@@ -18,11 +18,7 @@ internal class UpdateWeatherCommandHandler(IWeatherRepository weatherRepository,
             ?? throw new NotFoundException($"Для города с идентификатором {request.CityId} информация о погоде не найдена");
         
         var existed = await weatherRepository.Get(request.CityId, cancellationToken);
-        if (existed is null)
-        {
-            await weatherRepository.Create(weather, cancellationToken);
-        }
-        else if (existed.Timestamp != weather.Timestamp)
+        if (existed.Timestamp != weather.Timestamp)
         {
             existed.City = null;
             var history = new WeatherHistory

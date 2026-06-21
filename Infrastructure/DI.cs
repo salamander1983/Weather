@@ -1,7 +1,9 @@
-﻿using Domain.Interfaces.External;
+﻿using Domain.Interfaces.Dispatchers;
+using Domain.Interfaces.External;
 using Domain.Interfaces.Repositories;
 
 using Infrastructure.DbContexts;
+using Infrastructure.Implementations.Dispatchers;
 using Infrastructure.Implementations.External.Gismeteo;
 using Infrastructure.Implementations.Repositories;
 
@@ -15,7 +17,8 @@ public static class DI
         {
             return services
                 .RegisterExternal()
-                .RegisterRepositories(connectionDB);
+                .RegisterRepositories(connectionDB)
+                .RegisterDispatcher();
         }
 
         public IServiceCollection RegisterExternal()
@@ -32,6 +35,12 @@ public static class DI
                 .AddDbContextFactory<WeatherContext>(builder => builder.UseNpgsql(connectionDB))
                 .AddSingleton<ICityRepository, CityRepository>()
                 .AddSingleton<IWeatherRepository, WeatherRepository>();
+        }
+
+        public IServiceCollection RegisterDispatcher()
+        {
+            return services
+                .AddSingleton<IEventDispatcher, EventDispatcher>();
         }
     }
 }

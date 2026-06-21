@@ -1,12 +1,15 @@
 ﻿using Application.Exceptions;
+using Application.Events;
 
+using Domain.Interfaces.Dispatchers;
 using Domain.Interfaces.External;
 using Domain.Interfaces.Repositories;
 
 namespace Application.Commands;
 
 internal class CreateCityCommandHandler(ICitiesRepository externalCitiesRepository, 
-                                        ICityRepository internalCityRepository)
+                                        ICityRepository internalCityRepository,
+                                        IEventDispatcher eventDispatcher)
     : IRequestHandler<CreateCityCommand>
 {
     public async Task Handle(CreateCityCommand request, CancellationToken cancellationToken)
@@ -23,5 +26,8 @@ internal class CreateCityCommandHandler(ICitiesRepository externalCitiesReposito
         }
 
         await internalCityRepository.Create(externalCity, cancellationToken);
+
+        var createCityEvent = new CityCreatedEvent(externalCity.Id, externalCity.Name);
+        await eventDispatcher.Dispatch(createCityEvent, cancellationToken);
     }
 }
